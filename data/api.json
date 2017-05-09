@@ -1,0 +1,50 @@
+[
+	{
+		"path": "/user/*",
+		"method": "POST",
+		"data": true,
+		"parameters": {
+			"email": {
+				"type": "string",
+				"required": true
+			},
+			"password": {
+				"type": "string",
+				"required": true
+			},
+			"enterprise": {
+				"type": "boolean",
+				"required": true
+			},
+			"description": {
+				"type": "string",
+				"required": true
+			}
+		}
+	},
+	{
+		"path": "/user/*",
+		"method": ["GET"],
+		"data": true
+	},
+	{
+		"path": "/match/*",
+		"method": "POST",
+		"data": true,
+		"parameters": {
+			"email1": {
+				"type": "string",
+				"required": true
+			},
+			"email2": {
+				"type": "string",
+				"required": true
+			}
+		}
+	},
+	{
+		"path": "/match/*",
+		"method": ["GET"],
+		"data": true		
+	}
+]
