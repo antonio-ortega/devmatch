@@ -1,4 +1,4 @@
-angular.module('website', ['ngRoute', 'wedeploy']).
+angular.module('website', ['ngRoute']).
     config(function ($routeProvider) {
         $routeProvider.
             when('/about', {templateUrl: 'partials/about.html', controller: 'AboutCtrl'}).
@@ -13,6 +13,25 @@ angular.module('website', ['ngRoute', 'wedeploy']).
 		
 		$scope.login = function () {
 			console.log("Login");
+		}
+		
+		$scope.customSubmit = function() {
+			var email = document.querySelector("input[name = email]").value
+			var pass = document.querySelector("input[name = pass]").value
+			var description = document.querySelector("input[name = description]").value
+	
+			console.log("pre")
+			WeDeploy
+			.data('http://db.devmatch-web.wedeploy.me')
+			.create('user', {
+				"email": email,
+				"password": pass,
+				"enterprise": false,
+				"description": description
+			}).then(function(user) {
+				console.log(user);
+			});
+			return false
 		}
 		
         $scope.message = StateService.getMessage();
