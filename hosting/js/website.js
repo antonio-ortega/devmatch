@@ -1,4 +1,4 @@
-angular.module('website', ['ngRoute']).
+angular.module('website', ['ngRoute', 'ui.bootstrap.modal']).
     config(function ($routeProvider) {
         $routeProvider.
             when('/about', {templateUrl: 'partials/about.html', controller: 'AboutCtrl'}).
@@ -11,30 +11,35 @@ angular.module('website', ['ngRoute']).
         $scope.title = 'Login Page';
         $scope.body = 'This is the login page body';
 
-    		$scope.login = function () {
-    			console.log("Login");
-    		}
+        $scope.open = function() {
+          $scope.showModal = true;
+        };
+
+        $scope.cancel = function() {
+          $scope.showModal = false;
+        };
 
     		$scope.customSubmit = function() {
-    			var email = document.querySelector("input[name = email]").value
-    			var pass = document.querySelector("input[name = pass]").value
-    			var description = document.querySelector("input[name = description]").value
+    			var email = document.querySelector("input[name = email]").value;
+    			var pass = document.querySelector("input[name = pass]").value;
+    			var description = document.querySelector("input[name = description]").value;
 
-    			console.log("pre")
     			WeDeploy
-    			.data('http://db.devmatch-web.wedeploy.me')
-    			.create('user', {
-    				"email": email,
-    				"password": pass,
-    				"enterprise": false,
-    				"description": description
-    			}).then(function(user) {
-    				console.log(user);
-    			});
-    			return false
-    		}
+      			.data('http://db.devmatch-web.wedeploy.me')
+      			.create('user', {
+      				"email": email,
+      				"password": pass,
+      				"enterprise": false,
+      				"description": description
+      			}).then(function(user) {
+      				console.log(user);
+      			});
 
-  		  $scope.login = function () {
+            $scope.showModal = false;
+      			return false
+      		}
+
+  		    $scope.login = function () {
 
             WeDeploy
                 .data('http://db.devmatch-web.wedeploy.me')
@@ -46,10 +51,10 @@ angular.module('website', ['ngRoute']).
                         alert("User not registered");
                         return;
                     }
-                    
+
                     user = JSON.stringify(users[0]);
-					setCookie("user", user, 2);
-					
+					          setCookie("user", user, 2);
+
                     $location.path('/home');
                 });
   		  }
