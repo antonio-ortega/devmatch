@@ -8,9 +8,9 @@
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button ng-click="login()">login</button>
+      <input type="text" ng-model="username" placeholder="username"/>
+      <input type="password" ng-model="password" placeholder="password"/>
+      <button ng-click=login()>login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
   </div>
@@ -19,4 +19,4 @@
 $('.message a').click(function(){
    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
-</script>	
+</script>

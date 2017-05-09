@@ -4,36 +4,53 @@ angular.module('website', ['ngRoute']).
             when('/about', {templateUrl: 'partials/about.html', controller: 'AboutCtrl'}).
             when('/experiments', {templateUrl: 'partials/experiments.html', controller: 'ExperimentsCtrl'}).
             when('/home', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'}).
-			when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'}).
+			      when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'}).
             otherwise({redirectTo: '/login'});
     })
-    .controller('LoginCtrl', function ($scope, StateService) {
+    .controller('LoginCtrl', function ($scope, $location, StateService) {
         $scope.title = 'Login Page';
         $scope.body = 'This is the login page body';
-		
-		$scope.login = function () {
-			console.log("Login");
-		}
-		
-		$scope.customSubmit = function() {
-			var email = document.querySelector("input[name = email]").value
-			var pass = document.querySelector("input[name = pass]").value
-			var description = document.querySelector("input[name = description]").value
-	
-			console.log("pre")
-			WeDeploy
-			.data('http://db.devmatch-web.wedeploy.me')
-			.create('user', {
-				"email": email,
-				"password": pass,
-				"enterprise": false,
-				"description": description
-			}).then(function(user) {
-				console.log(user);
-			});
-			return false
-		}
-		
+
+    		$scope.login = function () {
+    			console.log("Login");
+    		}
+
+    		$scope.customSubmit = function() {
+    			var email = document.querySelector("input[name = email]").value
+    			var pass = document.querySelector("input[name = pass]").value
+    			var description = document.querySelector("input[name = description]").value
+
+    			console.log("pre")
+    			WeDeploy
+    			.data('http://db.devmatch-web.wedeploy.me')
+    			.create('user', {
+    				"email": email,
+    				"password": pass,
+    				"enterprise": false,
+    				"description": description
+    			}).then(function(user) {
+    				console.log(user);
+    			});
+    			return false
+    		}
+
+  		  $scope.login = function () {
+
+            WeDeploy
+                .data('http://db.devmatch-web.wedeploy.me')
+                .match('email', $scope.username)
+                .match('password', $scope.password)
+                .get('user')
+                .then(function(user) {
+                    if(user.length == 0) {
+                        alert("User not registered");
+                        return;
+                    }
+
+                    $location.path('/home');
+                });
+  		  }
+
         $scope.message = StateService.getMessage();
 
         $scope.updateMessage = function (m) {
