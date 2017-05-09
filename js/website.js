@@ -41,12 +41,15 @@ angular.module('website', ['ngRoute']).
                 .match('email', $scope.username)
                 .match('password', $scope.password)
                 .get('user')
-                .then(function(user) {
-                    if(user.length == 0) {
+                .then(function(users) {
+                    if(users.length == 0) {
                         alert("User not registered");
                         return;
                     }
-
+                    
+                    user = JSON.stringify(users[0]);
+					setCookie("user", user, 2);
+					
                     $location.path('/home');
                 });
   		  }
